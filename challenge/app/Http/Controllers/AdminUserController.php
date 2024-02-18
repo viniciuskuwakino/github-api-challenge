@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\AdminsRepository;
-use App\Repositories\IAdminsRepository;
+use App\Http\Requests\AdminStoreRequest;
+use App\Http\Requests\AdminUpdateRequest;
 use App\Services\AdminsService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Http\RedirectResponse;
 
 class AdminUserController extends Controller
 {
@@ -36,40 +38,40 @@ class AdminUserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AdminStoreRequest $request): RedirectResponse
     {
-        dd($request->all());
-    }
+        $this->adminsService->createAdmin($request->all());
+        $users = $this->adminsService->listAllAdmins();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        return to_route('admin.show');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id): Response
     {
-        //
+        $selectedAdminUser = $this->adminsService->findAdminById($id);
+
+        return Inertia::render('Admin/Edit', compact('selectedAdminUser'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(AdminUpdateRequest $request): RedirectResponse
     {
-        //
+        $this->adminsService->updateAdmin($request['id'], $request->except(['id']));
+        return Redirect::route('edit.admin.user', ['id' => $request['id']]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): RedirectResponse
     {
-        //
+        $this->adminsService->deleteAdmin($id);
+
+        return Redirect::route('admin.show');
     }
 }
