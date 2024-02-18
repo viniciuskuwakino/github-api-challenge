@@ -18,5 +18,25 @@ class EloquentAdminsRepository implements IAdminsRepository
         return $this->model->all();
     }
 
+    public function findById(string $id): User
+    {
+        return $this->model->find($id);
+    }
+
+    public function create(Array $req): void
+    {
+        $this->model->create($req);
+    }
+
+    public function update(User $user, Array $req): void
+    {
+        $user->update($req);
+    }
+
+    public function delete(User $user): void
+    {
+        $user->delete();
+    }
+
 
 }
