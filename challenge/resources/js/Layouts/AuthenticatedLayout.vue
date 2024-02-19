@@ -35,10 +35,17 @@ const showingNavigationDropdown = ref(false);
                             </div>
 
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('admin.show')" :active="route().current('admin.show')">
+                                <NavLink :href="route('admin.index')" :active="route().current('admin.index')">
                                     Admin
                                 </NavLink>
                             </div>
+
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink :href="route('github.index')" :active="route().current('github.index')">
+                                    GitHub's Users
+                                </NavLink>
+                            </div>
+
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
