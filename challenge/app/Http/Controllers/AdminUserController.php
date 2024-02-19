@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AdminStoreRequest;
 use App\Http\Requests\AdminUpdateRequest;
 use App\Services\AdminsService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -43,7 +42,7 @@ class AdminUserController extends Controller
         $this->adminsService->createAdmin($request->all());
         $users = $this->adminsService->listAllAdmins();
 
-        return to_route('admin.show');
+        return to_route('admin.index');
     }
 
     /**
@@ -72,6 +71,6 @@ class AdminUserController extends Controller
     {
         $this->adminsService->deleteAdmin($id);
 
-        return Redirect::route('admin.show');
+        return Redirect::route('admin.index');
     }
 }
